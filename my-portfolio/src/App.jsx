@@ -13,10 +13,12 @@ export default function App() {
     <Router>
       <Header />
       <Routes>
+        <Route path="/" element={<AboutMe />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="/spongebob-game" element={<SpongeBobGame />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />
+        
       </Routes>
     </Router>
     
@@ -35,5 +37,34 @@ export default function App() {
       </nav>
   
     )
+  }
+
+  function AboutMe(){
+    return(
+      <div>
+        <h1 className="page-header-text">About Me</h1>
+        <div className="row">
+          <div className="col">
+          <img src="/images/placeholder.png"/> 
+          </div>
+       
+          <div className="col">
+          <card className="about-me-card">
+          <p className="about-me-text">
+           Hi! My name is Caitlyn Jones and I am an aspiring Game and Web Developper!
+            I am a senior at Brandeis University studying Computer Science and Applied Math. I have experience in
+            Java, Python, HTML, C++, R, Processing, and JavaScript. I am passionate about learning new programming languages and technologies,
+             and I am always looking for new challenges to tackle. I am excited to continue my journey in the world of game and
+            web development, and I am eager to see where my skills will take me in the future!
+          </p>
+          </card>
+          
+          </div>
+        </div>
+      </div>
+
+      
+    )
+
   }
 
