@@ -4,7 +4,7 @@ class KrabbyPatties extends Actor {
   public KrabbyPatties() {
     super();
     x = random(0, width);        // start at random x
-    y = random(0, height);       // start at random y
+    y = -50;       // start at random y
     //size = (int)random(10, 10);    // random size
     velocity = pattieSpeed;    // Random Speed for y
     course = 90;

@@ -48,8 +48,8 @@ void draw(){
         arc(900, 100, 150, 150, PI, TWO_PI);
         stroke(0, 0, 0); 
 
-        for (int i = 0; i < rain.length; i++) {
-        rain.get(i).act();
+        for (int i = 0; i < rain.size(); i++) {
+            rain.get(i).act();
         }
         
         mySpongeBob.act();
