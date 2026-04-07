@@ -120,5 +120,6 @@ class SpongeBob extends Actor {
   void act() {
     drawSpongebob();  
     keyListener();
+    x = constrain(x, -100, width - 185);
   }
 }
