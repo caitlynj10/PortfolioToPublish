@@ -1,5 +1,5 @@
 export default function SpongeBobGame() {
-    const scale = 1; // 0.8 scale makes the 1000px game appear as 800px
+    const scale = .8; // 0.8 scale makes the 1000px game appear as 800px
     const originalSize = 1000;
     const scaledSize = originalSize * scale;
 
