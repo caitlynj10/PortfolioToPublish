@@ -3,6 +3,7 @@ import Resume from "./pages/Resume.jsx";
 import SpongeBobGame from './pages/SpongeBobGame.jsx';
 import Projects from './pages/Projects.jsx';
 import Contact from './pages/Contact.jsx';
+import AiHorrorGame from './pages/AiHorrorGame.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/spongebob-game" element={<SpongeBobGame />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/ai-horror-game" element={<AiHorrorGame />} />
         
       </Routes>
     </Router>
@@ -32,6 +34,7 @@ export default function App() {
         <Link  className="header-text" to="/">Caitlyn Jones</Link>
         <Link  className="nav-link" to="/resume">Resume</Link>
         <Link  className="nav-link" to="/spongebob-game">SpongeBob Game</Link>
+        <Link  className="nav-link" to="/ai-horror-game">AI Horror Game</Link>
         <Link  className="nav-link" to="/projects">Projects</Link>
         <Link  className="nav-link" to="/contact">Contact</Link>
       </nav>
