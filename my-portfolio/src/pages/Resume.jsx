@@ -1,8 +1,19 @@
+import { Document, Page, pdfjs } from "react-pdf";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+
 export default function Resume() {
     return (
-        <div>
-        <h2>Resume</h2>
-        <p>This is where my resume will be displayed.</p>
+        <div className="res">
+            <h2 className="page-header-text">Resume</h2>
+            <div style={{ display: 'flex', justifyContent: 'center', margin: "10px"}}>
+                <Document 
+                    file="/images/RESUME 2026.pdf"
+                    onLoadError={console.error}
+                >
+                    <Page pageIndex={0} renderTextLayer={false} renderAnnotationLayer={false} />
+                </Document>
+            </div>
         </div>
     )
 }
