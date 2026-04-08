@@ -1,9 +1,8 @@
 import './App.css'
 import Resume from "./pages/Resume.jsx";
 import SpongeBobGame from './pages/SpongeBobGame.jsx';
-import Projects from './pages/Projects.jsx';
+import AiHorrorStory from './pages/AiHorrorStory.jsx';
 import Contact from './pages/Contact.jsx';
-import AiHorrorGame from './pages/AiHorrorGame.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
@@ -17,10 +16,8 @@ export default function App() {
         <Route path="/" element={<AboutMe />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="/spongebob-game" element={<SpongeBobGame />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/ai-horror-game" element={<AiHorrorGame />} />
-        
+        <Route path="/ai-horror-story" element={<AiHorrorStory />} />
+        <Route path="/contact" element={<Contact />} />       
       </Routes>
     </Router>
     
@@ -34,8 +31,7 @@ export default function App() {
         <Link  className="header-text" to="/">Caitlyn Jones</Link>
         <Link  className="nav-link" to="/resume">Resume</Link>
         <Link  className="nav-link" to="/spongebob-game">SpongeBob Game</Link>
-        <Link  className="nav-link" to="/ai-horror-game">AI Horror Game</Link>
-        <Link  className="nav-link" to="/projects">Projects</Link>
+        <Link  className="nav-link" to="/ai-horror-story">AI Horror Story</Link>
         <Link  className="nav-link" to="/contact">Contact</Link>
       </nav>
   
@@ -53,15 +49,14 @@ export default function App() {
        
           <div className="col">
           <card className="about-me-card">
-          <p className="about-me-text">
-           Hi! My name is Caitlyn Jones and I am an aspiring Game and Web Developper!
+          <p className="body-text">
+            Hi! My name is Caitlyn Jones and I am an aspiring Game and Web Developer!
             I am a senior at Brandeis University studying Computer Science and Applied Math. I have experience in
             Java, Python, HTML, C++, R, Processing, and JavaScript. I am passionate about learning new programming languages and technologies,
-             and I am always looking for new challenges to tackle. I am excited to continue my journey in the world of game and
+            and I am always looking for new challenges to tackle. I am excited to continue my journey in the world of game and
             web development, and I am eager to see where my skills will take me in the future!
           </p>
           </card>
-          
           </div>
         </div>
       </div>
@@ -70,4 +65,3 @@ export default function App() {
     )
 
   }
-

@@ -4,12 +4,14 @@ export default function SpongeBobGame() {
     const scaledSize = originalSize * scale;
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
-            <h2 className="page-header-text">Krabby Patty Catcher</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <h2 className="page-header-text" style={{ margin: '10px' }}>Krabby Patty Catcher</h2>
             
             <div className="game-wrapper" style={{ 
                 width: `${scaledSize}px`, 
                 height: `${scaledSize}px`, 
+                margin: '10px',
+                overflow: 'hidden',
             }}>
                 <iframe
                     src="/games/spongebob/index.html"
