@@ -15,7 +15,7 @@ int errors = 0;
 
 
 void setup() {
-  size(540, 690, P2D); // 9 cells * 60px
+  size(540, 690); // 9 cells * 60px - Removed P2D for web compatibility
   engine = new SudokuGame();
   
   fullBoard = engine.createBoard();
@@ -157,7 +157,6 @@ void startGame(){
 }
 
 void gameEnded(){
-  delay(300);
   stroke(0);
   strokeWeight(1);
   fill(103, 191, 235);
@@ -501,311 +500,104 @@ void highlightSelected() {
   }
 }
 
+class SudokuGame {
+  int[][] createBoard() {
+    int[][] board = new int[9][9];
+    solve(board);
+    return board;
+  }
 
-import java.util.*;
-
-class SudokuGame{
-
-    public int[][] createBoard(){
-        int[][] board = new int[9][9];
-        checkValidBoard(board);
-    
-        return board;
-    }
-
-    public boolean checkValidBoard(int[][] board){
-        for (int i = 0; i < 9; i++) {
-            for (int j = 0; j < 9; j++) {
-                if (board[i][j] == 0) { 
-                    List<Integer> nums = new ArrayList<>();
-                    for (int k = 1; k <= 9; k++) nums.add(k);
-                    Collections.shuffle(nums);
-                    for (int num : nums) {
-                        if (checkRows(num, board, i) && checkColumns(num, board, j) && checkSquare(num, board, i, j)) {
-                            board[i][j] = num;
-                            if (checkValidBoard(board)) { 
-                                return true;
-                            }
-                            board[i][j] = 0; 
-                        }
-                    }
-                    return false; 
-                }
+  boolean solve(int[][] board) {
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (board[i][j] == 0) {
+          int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+          for (int k = 0; k < 9; k++) {
+            int r = (int)random(9);
+            int temp = nums[k];
+            nums[k] = nums[r];
+            nums[r] = temp;
+          }
+          for (int n : nums) {
+            if (isValid(board, i, j, n)) {
+              board[i][j] = n;
+              if (solve(board)) return true;
+              board[i][j] = 0;
             }
+          }
+          return false;
         }
-
-        return true;
+      }
     }
+    return true;
+  }
 
-    public void printBoard(int[][] board){  
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                System.out.print(board[i][j] + " ");
-            }
-            System.out.println();   
-        }
-
+  boolean isValid(int[][] board, int row, int col, int num) {
+    for (int i = 0; i < 9; i++) {
+      if (board[row][i] == num || board[i][col] == num) return false;
     }
-
-    public boolean checkRows(int rowVal, int[][] board, int row) {
-        for(int i = 0; i<9; i++){
-            if(board[row][i] == rowVal){
-                return false;
-            }
-        }
-        return true;
+    int r = row - row % 3;
+    int c = col - col % 3;
+    for (int i = r; i < r + 3; i++) {
+      for (int j = c; j < c + 3; j++) {
+        if (board[i][j] == num) return false;
+      }
     }
+    return true;
+  }
 
-    public boolean checkColumns(int colVal, int[][] board, int col){
-        for(int j = 0; j<9; j++){
-            if(board[j][col] == colVal){
-                return false;
-            }
-        }
-        return true;
+  void copyBoard(int[][] dest, int[][] src) {
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        dest[i][j] = src[i][j];
+      }
     }
-    
-    public boolean checkSquare(int num, int[][] board, int row, int col){
-        int startRow = row - (row % 3);
-        int startCol = col - (col % 3);
-        for(int i = startRow; i < startRow + 3; i++){
-            for(int j = startCol; j < startCol + 3; j++){
-                if(board[i][j] == num){
-                    return false;
-                }
-            }
-                
-        }
+  }
 
-        return true;
+  void easyBoard(int[][] board) { removeNumbers(board, 30); }
+  void mediumBoard(int[][] board) { removeNumbers(board, 45); }
+  void hardBoard(int[][] board) { removeNumbers(board, 55); }
+
+  void removeNumbers(int[][] board, int count) {
+    int removed = 0;
+    while (removed < count) {
+      int r = (int)random(9);
+      int c = (int)random(9);
+      if (board[r][c] != 0) {
+        board[r][c] = 0;
+        removed++;
+      }
     }
+  }
 
-    public void  easyBoard(int[][] board){
-        Random rand = new Random();
-        for(int i = 0; i < board.length; i++){
-            int removeNums = rand.nextInt(2) + 3;
-            removeFromRow(board, i, removeNums);
-        }
-    
+  boolean completedBoard(int[][] display, int[][] full) {
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (display[i][j] == 0 || display[i][j] != full[i][j]) return false;
+      }
     }
+    return true;
+  }
 
-    public void mediumBoard(int[][] board){
-        Random rand = new Random();
-        for(int i = 0; i < board.length; i++){
-            int removeNums = rand.nextInt(2) + 4;
-            removeFromRow(board, i, removeNums);
-        }
-    
+  int countOnes(int[][] board, int[][] full) { return countNum(board, full, 1); }
+  int countTwos(int[][] board, int[][] full) { return countNum(board, full, 2); }
+  int countThrees(int[][] board, int[][] full) { return countNum(board, full, 3); }
+  int countFours(int[][] board, int[][] full) { return countNum(board, full, 4); }
+  int countFives(int[][] board, int[][] full) { return countNum(board, full, 5); }
+  int countSixes(int[][] board, int[][] full) { return countNum(board, full, 6); }
+  int countSevens(int[][] board, int[][] full) { return countNum(board, full, 7); }
+  int countEights(int[][] board, int[][] full) { return countNum(board, full, 8); }
+  int countNines(int[][] board, int[][] full) { return countNum(board, full, 9); }
 
+  int countNum(int[][] board, int[][] full, int n) {
+    int count = 0;
+    for (int i = 0; i < 9; i++) {
+      for (int j = 0; j < 9; j++) {
+        if (board[i][j] == n && board[i][j] == full[i][j]) count++;
+      }
     }
+    return count;
+  }
 
-    public void hardBoard(int[][] board){
-        Random rand = new Random();
-        for(int i = 0; i < board.length; i++){
-            int removeNums = rand.nextInt(2) + 5;
-            removeFromRow(board, i, removeNums);
-        }
-    
-
-    }
-
-    public void removeFromRow(int[][] board, int row, int countVals){
-        Random rand = new Random();
-        int removedVals = 0;
-        while(removedVals < countVals){
-            int col = rand.nextInt(9);
-            if(board[row][col] != 0){
-                board[row][col] = 0;
-                removedVals++;
-            }
-        }
-
-    }
-        
-    
-    public int[][] puzzleBoard(int [][] board){
-        
-        for(int i = 0; i < board.length; i+=6){
-            for(int j = 0; j < board[i].length; j+=6){
-                board[i][j] = 0;
-            }
-        }
-        return board;
-
-
-    }
-
-    public void copyBoard(int [][] a, int [][] b){
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                a[r][c] = b[r][c];
-            }
-        }
-    }
-
-    public boolean completedBoard(int[][] empty, int[][]  complete){
-        for(int i = 0; i < empty.length; i++){
-            for(int j = 0; j < empty[i].length; j++){
-                if(empty[i][j] != complete[i][j]){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public int countOnes(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 1 && board[i][j] == solution[i][j]){
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    public int countTwos(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 2 && board[i][j] == solution[i][j]){
-                    count++;
-
-                }
-            }
-        }
-        return count;
-    }
-
-    public int countThrees(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 3 && board[i][j] == solution[i][j]){
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    public int countFours(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 4 && board[i][j] == solution[i][j]){
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    public int countFives(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 5 && board[i][j] == solution[i][j]){
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    public int countSixes(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 6 && board[i][j] == solution[i][j]){
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    public int countSevens(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 7 && board[i][j] == solution[i][j]){
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    public int countEights(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 8 && board[i][j] == solution[i][j]){
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    public int countNines(int [][] board, int [][] solution){
-        int count = 0;
-        for(int i = 0; i < board.length; i++){
-            for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 9 && board[i][j] == solution[i][j]){
-                    count++;
-                }
-            }
-        }
-        return count;
-    }
-
-    public boolean allNums(int nums){
-        if(nums != 9){
-            return false;
-        }
-        return true;
-    }
-    
-    public void playGame(){
-        int[][] board = createBoard();
-        int [][] filledBoard = new int[9][9];
-        copyBoard(filledBoard, board);
-        int [][] puzzleBoard = puzzleBoard(board); 
-        System.out.println("Complete Board");
-        printBoard(filledBoard);
-        System.out.println("Puzzle Board");
-        printBoard(puzzleBoard);
-        Scanner scan = new Scanner(System.in);
-        while(!completedBoard(puzzleBoard, filledBoard)){
-            System.out.print("Enter row: ");
-            int row = scan.nextInt();
-            System.out.print("Enter column: ");
-            int col = scan.nextInt();
-            System.out.print("Enter number: ");
-            int num = scan.nextInt();
-            if(filledBoard[row][col] == num){
-                System.out.println("Correct");
-                puzzleBoard[row][col] = num;
-                printBoard(puzzleBoard);
-            }
-            else{
-                System.out.println("Incorrect");
-            }
-        }
-        System.out.print("Game Complete");
-        scan.close();
-        
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Playing Sudoku");
-        SudokuGame game = new SudokuGame();
-        game.playGame();
-        
-    }
-
+  boolean allNums(int count) { return count == 9; }
 }

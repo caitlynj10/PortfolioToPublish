@@ -5,11 +5,11 @@
     <title>Sudoku Game</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.min.js"></script>
     <style>
-        body { margin: 0; padding: 0; overflow: hidden; display: flex; justify-content: center; align-items: center; background-color: #fff; }
-        canvas { outline: none; }
+        body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; background-color: #ffffff; height: 100vh; width: 100vw; overflow: hidden; }
+        canvas { outline: none; border: 1px solid #ccc; }
     </style>
 </head>
 <body>
-    <canvas data-processing-source="Sudoku.pde"></canvas>
+    <canvas id="sudoku" data-processing-source="Sudoku.pde"></canvas>
 </body>
 </html>
