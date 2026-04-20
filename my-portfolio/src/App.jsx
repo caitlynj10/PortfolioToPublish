@@ -3,6 +3,7 @@ import Resume from "./pages/Resume.jsx";
 import SpongeBobGame from './pages/SpongeBobGame.jsx';
 import AiHorrorStory from './pages/AiHorrorStory.jsx';
 import Contact from './pages/Contact.jsx';
+import Sudoku from './pages/Sudoku.jsx';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/" element={<AboutMe />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="/spongebob-game" element={<SpongeBobGame />} />
+        <Route path="/sudoku" element={<Sudoku />} />
         <Route path="/ai-horror-story" element={<AiHorrorStory />} />
         <Route path="/contact" element={<Contact />} />       
       </Routes>
@@ -31,6 +33,7 @@ export default function App() {
         <Link  className="header-text" to="/">Caitlyn Jones</Link>
         <Link  className="nav-link" to="/resume">Resume</Link>
         <Link  className="nav-link" to="/spongebob-game">SpongeBob Game</Link>
+        <Link  className="nav-link" to="/sudoku">Sudoku</Link>
         <Link  className="nav-link" to="/ai-horror-story">AI Horror Story</Link>
         <Link  className="nav-link" to="/contact">Contact</Link>
       </nav>
