@@ -11,7 +11,7 @@ export default function App() {
   
   return (
     <>
-    <Router>
+    <HashRouter basename = "/PortfolioToPublish">
       <Header />
       <Routes>
         <Route path="/" element={<AboutMe />} />
@@ -21,7 +21,7 @@ export default function App() {
         <Route path="/ai-horror-story" element={<AiHorrorStory />} />
         <Route path="/contact" element={<Contact />} />       
       </Routes>
-    </Router>
+    </HashRouter>
     
     </>
   )
