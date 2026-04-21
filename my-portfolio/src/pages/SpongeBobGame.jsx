@@ -13,7 +13,7 @@ export default function SpongeBobGame() {
                 overflow: 'hidden',
             }}>
                 <iframe
-                    src="/games/spongebob/index.html"
+                    src={`${import.meta.env.BASE_URL}games/spongebob/index.html`}
                     title="SpongeBob Game"
                     width={originalSize}
                     height={originalSize}

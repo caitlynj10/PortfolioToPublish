@@ -4,7 +4,7 @@ export default function AiHorrorStory() {
             <h2 className="page-header-text">AI Horror Story</h2>
             <div className="row">
                 <div className="col">
-                    <img className="game-image" src="/images/killer_ai.png"/> 
+                    <img className="game-image" src={`${import.meta.env.BASE_URL}images/killer_ai.png`} alt="Killer AI"/> 
                 </div>
                 <div className="col">
                     <card className="about-me-card">
@@ -15,7 +15,7 @@ export default function AiHorrorStory() {
                             it could steal and harvest your information due to overuse.
                             <br />
                             <br />
-                            <a href="/games/ai_horror_story/AI Horror Story.html" target="_blank" rel="noopener noreferrer">
+                            <a href={`${import.meta.env.BASE_URL}games/ai_horror_story/AI Horror Story.html`} target="_blank" rel="noopener noreferrer">
                             Play Game!
                             </a>  
                         </p>

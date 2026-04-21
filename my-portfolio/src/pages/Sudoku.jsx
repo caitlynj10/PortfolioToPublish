@@ -14,7 +14,7 @@ export default function Sudoku() {
             
             
                 <iframe
-                    src="/games/sudoku/index.html"
+                    src={`${import.meta.env.BASE_URL}games/sudoku/index.html`}
                     title="Sudoku Game"
                     width="540"
                     height="690"
