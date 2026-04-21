@@ -4,7 +4,7 @@ import SpongeBobGame from './pages/SpongeBobGame.jsx';
 import AiHorrorStory from './pages/AiHorrorStory.jsx';
 import Contact from './pages/Contact.jsx';
 import Sudoku from './pages/Sudoku.jsx';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 
 export default function App() {
