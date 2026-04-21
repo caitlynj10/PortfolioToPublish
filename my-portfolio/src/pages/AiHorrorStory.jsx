@@ -7,7 +7,7 @@ export default function AiHorrorStory() {
                     <img className="game-image" src={`${import.meta.env.BASE_URL}images/killer_ai.png`} alt="Killer AI"/> 
                 </div>
                 <div className="col">
-                    <card className="about-me-card">
+                    <div className="about-me-card">
                         <p className="body-text">
                             In my <b><i>Digital Games and Gaming Culture</i></b> class, we were tasked with creating a game relating to current societal events.
                             I decided to create an interactive horror story-like game using the software Twine where the player has an unexpected
@@ -19,7 +19,7 @@ export default function AiHorrorStory() {
                             Play Game!
                             </a>  
                         </p>
-                    </card>
+                    </div>
                 </div>
             </div>
                      

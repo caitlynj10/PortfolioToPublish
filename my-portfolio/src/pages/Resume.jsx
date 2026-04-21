@@ -8,7 +8,7 @@ export default function Resume() {
             <h2 className="page-header-text">Resume</h2>
             <div style={{ display: 'flex', justifyContent: 'center', margin: "10px"}}>
                 <Document 
-                    file={`${import.meta.env.BASE_URL}images/RESUME 2026.pdf`}
+                    file={`${import.meta.env.BASE_URL}images/RESUME%202026.pdf`}
                     onLoadError={console.error}
                 >
                     <Page pageIndex={0} renderTextLayer={false} renderAnnotationLayer={false} />

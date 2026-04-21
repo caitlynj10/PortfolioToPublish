@@ -51,7 +51,7 @@ export default function App() {
           </div>
        
           <div className="col">
-          <card className="about-me-card">
+          <div className="about-me-card">
           <p className="body-text">
             Hi! My name is Caitlyn Jones and I am an aspiring Game and Web Developer!
             I am a senior at Brandeis University studying Computer Science and Applied Math. I have experience in
@@ -59,7 +59,7 @@ export default function App() {
             and I am always looking for new challenges to tackle. I am excited to continue my journey in the world of game and
             web development, and I am eager to see where my skills will take me in the future!
           </p>
-          </card>
+          </div>
           </div>
         </div>
       </div>
