@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com;">
     <title>Sudoku Game</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.min.js"></script>
     <style>
@@ -10,6 +12,6 @@
     </style>
 </head>
 <body>
-    <canvas id="sudoku" data-processing-source="Sudoku.pde"></canvas>
+    <canvas id="sudoku" data-processing-sources="Sudoku.pde SudokuLogic.pde"></canvas>
 </body>
 </html>

@@ -1,11 +1,10 @@
 export default function SpongeBobGame() {
-    const scale = .6; // 0.8 scale makes the 1000px game appear as 800px
+    const scale = .58; // 0.8 scale makes the 1000px game appear as 800px
     const originalSize = 1000;
     const scaledSize = originalSize * scale;
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <h2 className="page-header-text" style={{ margin: '10px' }}>Krabby Patty Catcher</h2>
             
             <div className="game-wrapper" style={{ 
                 width: `${scaledSize}px`, 

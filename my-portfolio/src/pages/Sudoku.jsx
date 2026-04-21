@@ -1,26 +1,28 @@
 export default function Sudoku() {
-    const originalWidth = 540;
-    const originalHeight = 690;
+  
 
     return (
+       
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-            <h2 className="page-header-text" style={{ margin: '10px' }}>Sudoku</h2>
-            
-            <div className="game-wrapper" style={{ 
-                width: `${originalWidth}px`, 
-                height: `${originalHeight}px`, 
-                margin: '10px',
-                overflow: 'hidden',
+            <div className = "game-wrapper" style={{
+                width: "459px",
+                height: "586.5px",
+                margin: "10px",
+                overflow: "hidden",
+
             }}>
+            
+            
                 <iframe
                     src="/games/sudoku/index.html"
                     title="Sudoku Game"
-                    width={originalWidth}
-                    height={originalHeight}
-                    style={{ border: 'none' }}
+                    width="540"
+                    height="690"
+                    style={{ transform: `scale(0.85)`, transformOrigin: 'top left', border: 'none' }}
                     scrolling="no"
                 ></iframe>
             </div>
         </div>
+          
     )
 }

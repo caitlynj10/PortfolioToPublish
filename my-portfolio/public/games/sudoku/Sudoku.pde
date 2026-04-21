@@ -11,11 +11,12 @@ boolean gameStarted = false;
 boolean gameWon = false;
 String difficulty = "";
 int errors = 0;
+int completionTimer = -1;
 
 
 
 void setup() {
-  size(540, 690); // 9 cells * 60px - Removed P2D for web compatibility
+  size(540, 690, P2D); // 9 cells * 60px
   engine = new SudokuGame();
   
   fullBoard = engine.createBoard();
@@ -28,10 +29,7 @@ void setup() {
 }
 
 void draw() {
-  if(gameWon){
-    gameEnded();
-  }
-  else if(!gameStarted){
+  if(!gameStarted){
     startGame();
   }
   else{
@@ -81,8 +79,19 @@ void draw() {
     drawNumbers();
     displayNumbers();
 
-    if(engine.completedBoard(displayBoard, fullBoard)){
-      gameWon = true;
+    if (!gameWon) {
+      if(engine.completedBoard(displayBoard, fullBoard)){
+        if (completionTimer == -1) {
+          completionTimer = millis();
+        }
+        if (millis() - completionTimer >= 700) {
+          gameWon = true;
+        }
+      } else {
+        completionTimer = -1;
+      }
+    } else {
+      gameEnded();
     }
   }
 
@@ -157,6 +166,7 @@ void startGame(){
 }
 
 void gameEnded(){
+  
   stroke(0);
   strokeWeight(1);
   fill(103, 191, 235);
@@ -355,6 +365,7 @@ void mousePressed() {
     selectedRow = -1;
     selectedCol = -1;
     errors = 0;
+    completionTimer = -1;
     fullBoard = engine.createBoard();
     engine.copyBoard(displayBoard, fullBoard);
     difficulty = "Easy";
@@ -362,8 +373,8 @@ void mousePressed() {
   }
 
   if (mouseY < 590 && mouseY >= 50) {
-    int r = (mouseY - 50) / cellSize;
-    int c = mouseX / cellSize;
+    int r = floor((mouseY - 50) / cellSize);
+    int c = floor(mouseX / cellSize);
   
     if (r >= 0 && r < 9 && c >= 0 && c < 9) {
       if(displayBoard[r][c] == 0 || displayBoard[r][c] != fullBoard[r][c]){
@@ -433,6 +444,7 @@ void keyPressed(){
     selectedRow = -1;
     selectedCol = -1;
     errors = 0;
+    completionTimer = -1;
     fullBoard = engine.createBoard();
     engine.copyBoard(displayBoard, fullBoard);
     difficulty = "Easy";
@@ -498,106 +510,4 @@ void highlightSelected() {
       }
     }
   }
-}
-
-class SudokuGame {
-  int[][] createBoard() {
-    int[][] board = new int[9][9];
-    solve(board);
-    return board;
-  }
-
-  boolean solve(int[][] board) {
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
-        if (board[i][j] == 0) {
-          int[] nums = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-          for (int k = 0; k < 9; k++) {
-            int r = (int)random(9);
-            int temp = nums[k];
-            nums[k] = nums[r];
-            nums[r] = temp;
-          }
-          for (int n : nums) {
-            if (isValid(board, i, j, n)) {
-              board[i][j] = n;
-              if (solve(board)) return true;
-              board[i][j] = 0;
-            }
-          }
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  boolean isValid(int[][] board, int row, int col, int num) {
-    for (int i = 0; i < 9; i++) {
-      if (board[row][i] == num || board[i][col] == num) return false;
-    }
-    int r = row - row % 3;
-    int c = col - col % 3;
-    for (int i = r; i < r + 3; i++) {
-      for (int j = c; j < c + 3; j++) {
-        if (board[i][j] == num) return false;
-      }
-    }
-    return true;
-  }
-
-  void copyBoard(int[][] dest, int[][] src) {
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
-        dest[i][j] = src[i][j];
-      }
-    }
-  }
-
-  void easyBoard(int[][] board) { removeNumbers(board, 30); }
-  void mediumBoard(int[][] board) { removeNumbers(board, 45); }
-  void hardBoard(int[][] board) { removeNumbers(board, 55); }
-
-  void removeNumbers(int[][] board, int count) {
-    int removed = 0;
-    while (removed < count) {
-      int r = (int)random(9);
-      int c = (int)random(9);
-      if (board[r][c] != 0) {
-        board[r][c] = 0;
-        removed++;
-      }
-    }
-  }
-
-  boolean completedBoard(int[][] display, int[][] full) {
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
-        if (display[i][j] == 0 || display[i][j] != full[i][j]) return false;
-      }
-    }
-    return true;
-  }
-
-  int countOnes(int[][] board, int[][] full) { return countNum(board, full, 1); }
-  int countTwos(int[][] board, int[][] full) { return countNum(board, full, 2); }
-  int countThrees(int[][] board, int[][] full) { return countNum(board, full, 3); }
-  int countFours(int[][] board, int[][] full) { return countNum(board, full, 4); }
-  int countFives(int[][] board, int[][] full) { return countNum(board, full, 5); }
-  int countSixes(int[][] board, int[][] full) { return countNum(board, full, 6); }
-  int countSevens(int[][] board, int[][] full) { return countNum(board, full, 7); }
-  int countEights(int[][] board, int[][] full) { return countNum(board, full, 8); }
-  int countNines(int[][] board, int[][] full) { return countNum(board, full, 9); }
-
-  int countNum(int[][] board, int[][] full, int n) {
-    int count = 0;
-    for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
-        if (board[i][j] == n && board[i][j] == full[i][j]) count++;
-      }
-    }
-    return count;
-  }
-
-  boolean allNums(int count) { return count == 9; }
 }
